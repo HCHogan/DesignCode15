@@ -8,31 +8,78 @@
 import SwiftUI
 
 struct MemorizeView: View {
+    let emojis = ["😭", "😡", "😋", "😛"]
+    @State var cardCount = 4
+
     var body: some View {
+        VStack {
+            cards
+            Spacer()
+            cardCountAdjusters
+        }
+        .padding()
+
+    }
+
+    var cardCountAdjusters: some View {
         HStack {
-            CardView(isFaceUp: true)
-            CardView()
-            CardView()
-            CardView()
+            cardAdder
+            Spacer()
+            cardRemover
+        }
+    }
+
+    var cards: some View {
+        // implicit return
+        VStack {
+            // ForEach creates a bag of Legos
+            ForEach(emojis[0..<cardCount], id: \.self) { s in
+                CardView(content: s, isFaceUp: true)
+            }
         }
         .foregroundColor(.orange)
-        .imageScale(.small)
-        .padding()
+    }
+
+    var cardRemover: some View {
+        cardCountAdjuster(by: -1, symbol: "minus")
+    }
+
+    var cardAdder: some View {
+        cardCountAdjuster(by: 1, symbol: "plus")
+    }
+
+    func cardCountAdjuster(by offset: Int, symbol: String) -> some View {
+        Button {
+            cardCount += offset
+        } label: {
+            Image(systemName: symbol).font(.largeTitle)
+        }
+        .disabled(cardCount + offset < 1 || cardCount + offset > emojis.count)
     }
 }
 
 struct CardView: View {
-    var isFaceUp: Bool = false
+    let content: String
+    @State var isFaceUp = true
+    // Turn the var into a pointer, so the view itself is still immutable
+    // Temporary state for small things
+    // Never use it for the game logic
 
     var body: some View {
         ZStack {
-            if isFaceUp {
-                RoundedRectangle(cornerRadius: 12).foregroundColor(.white)
-                RoundedRectangle(cornerRadius: 12).strokeBorder(lineWidth: 2)
-                Text("😛").font(.largeTitle)
-            } else {
-                RoundedRectangle(cornerRadius: 12)
+            let base = RoundedRectangle(cornerRadius: 12)
+            // We use opacity instead of if else in @ViewBuilder here
+            Group {
+                base.fill(.white)
+                base.strokeBorder(lineWidth: 2)
+                Text(content).font(.largeTitle)
             }
+            .opacity(isFaceUp ? 1 : 0)
+            base.fill().opacity(isFaceUp ? 0 : 1)
+        }
+        .onTapGesture {
+            print("tapped!")
+            isFaceUp.toggle()
         }
     }
 }
@@ -40,6 +87,7 @@ struct CardView: View {
 struct FooView: View {
     // Computed property
     var body: some View {
+        // We can delete the parentheses only if we have a trailing closure
         VStack {
             Spacer()
             Text("shit")
