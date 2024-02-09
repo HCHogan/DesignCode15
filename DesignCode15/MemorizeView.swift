@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct MemorizeView: View {
-    let emojis = ["😭", "😡", "😋", "😛"]
+    let emojis = ["😭", "😡", "😋", "😛", "🤪", "🤓", "😰"]
     @State var cardCount = 4
 
     var body: some View {
         VStack {
-            cards
+            ScrollView {
+                cards
+            }
             Spacer()
             cardCountAdjusters
         }
@@ -31,10 +33,11 @@ struct MemorizeView: View {
 
     var cards: some View {
         // implicit return
-        VStack {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
             // ForEach creates a bag of Legos
             ForEach(emojis[0..<cardCount], id: \.self) { s in
-                CardView(content: s, isFaceUp: true)
+                CardView(content: s)
+                    .aspectRatio(3, contentMode: .fit)
             }
         }
         .foregroundColor(.orange)
@@ -91,6 +94,9 @@ struct FooView: View {
         VStack {
             Spacer()
             Text("shit")
+        }
+        HStack {
+            Text("b")
         }
     }
 }

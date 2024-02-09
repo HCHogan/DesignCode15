@@ -10,6 +10,19 @@ import Foundation
 struct Foo {
     var a: Int
     var b: Int
+
+    init(a: Int, b: Int) {
+        self.a = a
+        self.b = b
+    }
+}
+
+class Foo2 {
+    var a: Int
+
+    init(_ a: Int) {
+        self.a = a
+    }
 }
 
 func test() -> Int {
@@ -22,6 +35,7 @@ func test() -> Int {
         print(i, j);
     }
     let (_, _) = (1, 2)
+    var f = Foo2(1);
     
     return a
 }
@@ -30,7 +44,7 @@ enum Bar {
     case empty, bitch, dog
 }
 
-func test2(bar: Bar) -> Int {
+func test2(_ bar: Bar) -> Int {
     switch bar {
     case .dog:
         return 1
@@ -42,5 +56,5 @@ func test2(bar: Bar) -> Int {
 }
 
 func test3() {
-    test2(bar: .dog)
+    test2(.dog)
 }
