@@ -102,3 +102,7 @@ func test3() {
 func test4(f: (Int, Int) -> Bool) {
     let _ = f(1, 0)
 }
+
+func testFFI() -> String {
+    rustGreeting(text: "swift")
+}

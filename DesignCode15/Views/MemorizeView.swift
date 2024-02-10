@@ -4,17 +4,18 @@
 //
 //  Created by Hank Hogan on 2024/2/8.
 //
-
 import SwiftUI
 
 struct MemorizeView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     // ObservedObject means if the object says something changed, redraw the view.
+    // The lifetime of this object is tied to the lifetime of the view
 
     var body: some View {
         VStack {
             ScrollView {
                 cards
+                    .animation(.default, value: viewModel.cards)
             }
             Spacer()
             Button("Shuffle") {
@@ -23,7 +24,6 @@ struct MemorizeView: View {
             // cardCountAdjusters
         }
         .padding()
-
     }
 
     // var cardCountAdjusters: some View {
@@ -38,10 +38,15 @@ struct MemorizeView: View {
         // implicit return
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) {
             // ForEach creates a bag of Legos
-            ForEach(viewModel.cards.indices, id: \.self) { i in
-                CardView(viewModel.cards[i])
+            // we need an id for each element to identify which one is which, need to be unique(hashable)
+            // we used id: \.self here, this means the id is the element itself
+            ForEach(viewModel.cards) { c in
+                CardView(c)
                     .aspectRatio(2/3, contentMode: .fit)
                     .padding(4)
+                    .onTapGesture {
+                        viewModel.choose(c)
+                    }
             }
         }
         .foregroundColor(.orange)
@@ -90,6 +95,7 @@ struct CardView: View {
             .opacity(card.isFaceUp ? 1 : 0)
             base.fill().opacity(card.isFaceUp ? 0 : 1)
         }
+        .opacity(!card.isMatched ? 1 : 0)
         // .onTapGesture {
         //     print("tapped!")
         //     card.isFaceUp.toggle()
@@ -97,99 +103,9 @@ struct CardView: View {
     }
 }
 
-struct FooView: View {
-    // Computed property
-    var body: some View {
-        // We can delete the parentheses only if we have a trailing closure
-        VStack {
-            Spacer()
-            Text("shit")
-        }
-        HStack {
-            Text("b")
-        }
+struct MemorizeViewPreviews: PreviewProvider {
+    static var previews: some View {
+        let game = EmojiMemoryGame()
+        MemorizeView(viewModel: game)
     }
 }
-
-// Desugars into:
-struct FuckView: View {
-    var body: some View {
-        VStack(content: {
-            ViewBuilder.buildBlock(
-                Text("shits").font(.largeTitle),
-                Spacer()
-            )
-        })
-        .padding()
-        // View modifier: Send them a View, returns a View
-    }
-}
-
-struct AppStoreView: View {
-    @State private var selectedTab = 0
-    @State private var showAccountView = false
-
-    var body: some View {
-        TabView(selection: $selectedTab) {
-            HomeView(showAccountView: $showAccountView)
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
-                }
-                .tag(0)
-            Text("Second Tab")
-                .tabItem {
-                    Image(systemName: "bookmark.fill")
-                    Text("Second")
-                }
-                .tag(1)
-        }
-    }
-}
-
-struct HomeView: View {
-    @Binding var showAccountView: Bool
-
-    var body: some View {
-        NavigationView {
-            Text("Home Content")
-                .navigationBarTitle("App Store", displayMode: .inline)
-                .navigationBarItems(trailing:
-                    Button(action: {
-                        self.showAccountView.toggle()
-                    }) {
-                        Image(systemName: "person.crop.circle")
-                    }
-                    .sheet(isPresented: $showAccountView) {
-                        AccountView()
-                    }
-                )
-        }
-    }
-}
-
-struct AccountView2: View {
-    @State private var username = "User Name"
-
-    var body: some View {
-        VStack {
-            Text(username)
-            Button("Logout") {
-                print("Logout tapped!")
-            }
-        }
-    }
-}
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AppStoreView()
-//    }
-//}
-
-
-#Preview {
-    MemorizeView(viewModel: EmojiMemoryGame())
-}
-
-

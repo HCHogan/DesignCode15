@@ -1,0 +1,20 @@
+[package]
+name = "sruft"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+# [build]
+# build-stage = 1
+# target = ["aarch64-apple-ios-sim"]
+
+[lib]
+crate-type = ["lib", "cdylib", "staticlib"]
+
+[dependencies]
+thiserror = "1"
+uniffi = { version = "0.26", features = ["build"] }
+
+[build-dependencies]
+uniffi_build = "0.26.0"
+uniffi_bindgen = "0.26.0"

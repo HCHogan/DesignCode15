@@ -54,7 +54,7 @@ struct AccountView: View {
     var entryList: some View {
         Section {
             entry(destination: ContentView(), label: "Settings", systemImage: "gear")
-            entry(destination: FuckView(), label: "Billing", systemImage: "creditcard")
+            entry(destination: FFIView(), label: "Billing", systemImage: "creditcard")
             entry(destination: MemorizeView(viewModel: EmojiMemoryGame()), label: "Help", systemImage: "questionmark")
         }
         .accentColor(.primary)
