@@ -6,6 +6,25 @@
 //
 
 import Foundation
+import Alamofire
+
+func connect() {
+    let url = "http://47.115.205.46:5000/api/cas_login/nnu"
+    let parameters: [String: Any] = [
+        "username": "21220513",
+        "password": "283511"
+    ]
+
+    AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+        .responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                print("Response: \(value)")
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+}
 
 struct Foo {
     var a: Int
@@ -25,7 +44,26 @@ class Foo2 {
     }
 }
 
+struct Foo3<Element> 
+where
+    Element: Equatable
+{
+    var a: Element
+}
+
+protocol Moveable {
+    func move(by: Int)
+    var hasMoved: Bool { get }
+    var distanceFromStart: Int { get set }
+}
+
+enum Result<T, E> {
+    case Ok(T)
+    case Error(E)
+}
+
 func test() -> Int {
+    var arr3 = Array([1, 2, 3]);
     let a: Int = 1
     var i: Int = 1
     var s: String = "Hank"
@@ -57,4 +95,10 @@ func test2(_ bar: Bar) -> Int {
 
 func test3() {
     test2(.dog)
+    test2(.bitch)
+    var f = test4;
+}
+
+func test4(f: (Int, Int) -> Bool) {
+    let _ = f(1, 0)
 }

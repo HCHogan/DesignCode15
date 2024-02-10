@@ -55,7 +55,7 @@ struct AccountView: View {
         Section {
             entry(destination: ContentView(), label: "Settings", systemImage: "gear")
             entry(destination: FuckView(), label: "Billing", systemImage: "creditcard")
-            entry(destination: MemorizeView(), label: "Help", systemImage: "questionmark")
+            entry(destination: MemorizeView(viewModel: EmojiMemoryGame()), label: "Help", systemImage: "questionmark")
         }
         .accentColor(.primary)
         .listRowSeparatorTint(.blue)

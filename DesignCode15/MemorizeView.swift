@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MemorizeView: View {
-    let emojis = ["😭", "😡", "😋", "😛", "🤪", "🤓", "😰"]
-    @State var cardCount = 4
+    @ObservedObject var viewModel: EmojiMemoryGame
+    // ObservedObject means if the object says something changed, redraw the view.
 
     var body: some View {
         VStack {
@@ -17,56 +17,63 @@ struct MemorizeView: View {
                 cards
             }
             Spacer()
-            cardCountAdjusters
+            Button("Shuffle") {
+                viewModel.shuffle()
+            }
+            // cardCountAdjusters
         }
         .padding()
 
     }
 
-    var cardCountAdjusters: some View {
-        HStack {
-            cardAdder
-            Spacer()
-            cardRemover
-        }
-    }
+    // var cardCountAdjusters: some View {
+    //     HStack {
+    //         cardAdder
+    //         Spacer()
+    //         cardRemover
+    //     }
+    // }
 
     var cards: some View {
         // implicit return
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))]) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) {
             // ForEach creates a bag of Legos
-            ForEach(emojis[0..<cardCount], id: \.self) { s in
-                CardView(content: s)
-                    .aspectRatio(3, contentMode: .fit)
+            ForEach(viewModel.cards.indices, id: \.self) { i in
+                CardView(viewModel.cards[i])
+                    .aspectRatio(2/3, contentMode: .fit)
+                    .padding(4)
             }
         }
         .foregroundColor(.orange)
     }
 
-    var cardRemover: some View {
-        cardCountAdjuster(by: -1, symbol: "minus")
-    }
-
-    var cardAdder: some View {
-        cardCountAdjuster(by: 1, symbol: "plus")
-    }
-
-    func cardCountAdjuster(by offset: Int, symbol: String) -> some View {
-        Button {
-            cardCount += offset
-        } label: {
-            Image(systemName: symbol).font(.largeTitle)
-        }
-        .disabled(cardCount + offset < 1 || cardCount + offset > emojis.count)
-    }
+    // var cardRemover: some View {
+    //     cardCountAdjuster(by: -1, symbol: "minus")
+    // }
+    //
+    // var cardAdder: some View {
+    //     cardCountAdjuster(by: 1, symbol: "plus")
+    // }
+    //
+    // func cardCountAdjuster(by offset: Int, symbol: String) -> some View {
+    //     Button {
+    //         cardCount += offset
+    //     } label: {
+    //         Image(systemName: symbol).font(.largeTitle)
+    //     }
+    //     .disabled(cardCount + offset < 1 || cardCount + offset > emojis.count)
+    // }
 }
 
 struct CardView: View {
-    let content: String
-    @State var isFaceUp = true
+    let card: MemoryGame<String>.Card
     // Turn the var into a pointer, so the view itself is still immutable
     // Temporary state for small things
     // Never use it for the game logic
+
+    init(_ card: MemoryGame<String>.Card) {
+        self.card = card
+    }
 
     var body: some View {
         ZStack {
@@ -75,15 +82,18 @@ struct CardView: View {
             Group {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text(content).font(.largeTitle)
+                Text(card.content)
+                    .font(.system(size: 200))
+                    .minimumScaleFactor(0.01) // if this font is too big, you can scale it down.
+                    .aspectRatio(1, contentMode: .fit)
             }
-            .opacity(isFaceUp ? 1 : 0)
-            base.fill().opacity(isFaceUp ? 0 : 1)
+            .opacity(card.isFaceUp ? 1 : 0)
+            base.fill().opacity(card.isFaceUp ? 0 : 1)
         }
-        .onTapGesture {
-            print("tapped!")
-            isFaceUp.toggle()
-        }
+        // .onTapGesture {
+        //     print("tapped!")
+        //     card.isFaceUp.toggle()
+        // }
     }
 }
 
@@ -115,33 +125,71 @@ struct FuckView: View {
     }
 }
 
-#Preview {
-    MemorizeView()
-}
-/*
-在 Swift 中，`@ViewBuilder` 属性包装器实际上是一个语法糖，它在编译时会被转换为一个返回 `some View` 的函数。
-当我们使用 `@ViewBuilder` 标记一个函数或闭包参数时，编译器会将其转换为一个返回 `some View` 的函数，并将传递给该参数的多个视图组合成一个视图层次结构。
-下面是一个示例，展示了 `@ViewBuilder` 去糖后的代码：
-```swift
-struct ContentView: View {
+struct AppStoreView: View {
+    @State private var selectedTab = 0
+    @State private var showAccountView = false
+
     var body: some View {
-        VStack {
-            Text("Hello")
-            Text("World")
+        TabView(selection: $selectedTab) {
+            HomeView(showAccountView: $showAccountView)
+                .tabItem {
+                    Image(systemName: "house.fill")
+                    Text("Home")
+                }
+                .tag(0)
+            Text("Second Tab")
+                .tabItem {
+                    Image(systemName: "bookmark.fill")
+                    Text("Second")
+                }
+                .tag(1)
         }
     }
 }
-```
-上面的代码经过去糖后，实际上等价于以下代码：
-```swift
-struct ContentView: View {
+
+struct HomeView: View {
+    @Binding var showAccountView: Bool
+
     var body: some View {
-        ViewBuilder.buildBlock(
-            Text("Hello"),
-            Text("World")
-        )
+        NavigationView {
+            Text("Home Content")
+                .navigationBarTitle("App Store", displayMode: .inline)
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.showAccountView.toggle()
+                    }) {
+                        Image(systemName: "person.crop.circle")
+                    }
+                    .sheet(isPresented: $showAccountView) {
+                        AccountView()
+                    }
+                )
+        }
     }
 }
-```
 
-*/
+struct AccountView2: View {
+    @State private var username = "User Name"
+
+    var body: some View {
+        VStack {
+            Text(username)
+            Button("Logout") {
+                print("Logout tapped!")
+            }
+        }
+    }
+}
+
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AppStoreView()
+//    }
+//}
+
+
+#Preview {
+    MemorizeView(viewModel: EmojiMemoryGame())
+}
+
+
