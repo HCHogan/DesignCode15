@@ -37,7 +37,10 @@ struct FuckView: View {
 
 struct FFIView: View {
     var body: some View {
-        Text(testFFI()).font(.title)
+        VStack {
+            Text(testFFI()).font(.title).padding()
+            Text(rustTokioTest()).padding()
+        }
     }
 }
 
@@ -95,4 +98,8 @@ struct AccountView2: View {
             }
         }
     }
+}
+
+#Preview {
+    FFIView()
 }

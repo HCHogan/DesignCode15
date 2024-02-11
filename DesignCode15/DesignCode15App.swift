@@ -13,8 +13,8 @@ struct DesignCode15App: App {
     var body: some Scene {
         WindowGroup {
             // ContentView()
-//            AccountView()
-            MemorizeView(viewModel: game)
+            AccountView()
+//            MemorizeView(viewModel: game)
         }
     }
 }

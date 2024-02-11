@@ -364,6 +364,13 @@ public func rustGreeting(text: String)  -> String {
 }
     )
 }
+public func rustTokioTest()  -> String {
+    return try!  FfiConverterString.lift(
+        try! rustCall() {
+    uniffi_sruft_fn_func_rust_tokio_test($0)
+}
+    )
+}
 
 private enum InitializationResult {
     case ok
@@ -384,6 +391,9 @@ private var initializationResult: InitializationResult {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_sruft_checksum_func_rust_greeting() != 52327) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_sruft_checksum_func_rust_tokio_test() != 7675) {
         return InitializationResult.apiChecksumMismatch
     }
 

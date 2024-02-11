@@ -1,4 +1,5 @@
 namespace sruft {
   string rust_greeting([ByRef] string text);
   u64 rust_add(u64 left, u64 right);
+  string rust_tokio_test();
 };

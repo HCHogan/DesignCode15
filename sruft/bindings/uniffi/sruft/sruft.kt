@@ -419,6 +419,8 @@ internal interface UniffiLib : Library {
         uniffi_out_err: UniffiRustCallStatus,
     ): RustBuffer.ByValue
 
+    fun uniffi_sruft_fn_func_rust_tokio_test(uniffi_out_err: UniffiRustCallStatus): RustBuffer.ByValue
+
     fun ffi_sruft_rustbuffer_alloc(
         `size`: Int,
         uniffi_out_err: UniffiRustCallStatus,
@@ -639,6 +641,8 @@ internal interface UniffiLib : Library {
 
     fun uniffi_sruft_checksum_func_rust_greeting(): Short
 
+    fun uniffi_sruft_checksum_func_rust_tokio_test(): Short
+
     fun ffi_sruft_uniffi_contract_version(): Int
 }
 
@@ -658,6 +662,9 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_sruft_checksum_func_rust_greeting() != 52327.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_sruft_checksum_func_rust_tokio_test() != 7675.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
 }
@@ -792,6 +799,14 @@ fun `rustGreeting`(`text`: String): String {
     return FfiConverterString.lift(
         uniffiRustCall { _status ->
             UniffiLib.INSTANCE.uniffi_sruft_fn_func_rust_greeting(FfiConverterString.lower(`text`), _status)
+        },
+    )
+}
+
+fun `rustTokioTest`(): String {
+    return FfiConverterString.lift(
+        uniffiRustCall { _status ->
+            UniffiLib.INSTANCE.uniffi_sruft_fn_func_rust_tokio_test(_status)
         },
     )
 }

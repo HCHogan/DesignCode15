@@ -480,6 +480,8 @@ def _uniffi_check_api_checksums(lib):
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     if lib.uniffi_sruft_checksum_func_rust_greeting() != 52327:
         raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    if lib.uniffi_sruft_checksum_func_rust_tokio_test() != 7675:
+        raise InternalError("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
 
 # A ctypes library to expose the extern-C FFI definitions.
 # This is an implementation detail which will be called internally by the public API.
@@ -496,6 +498,10 @@ _UniffiLib.uniffi_sruft_fn_func_rust_greeting.argtypes = (
     ctypes.POINTER(_UniffiRustCallStatus),
 )
 _UniffiLib.uniffi_sruft_fn_func_rust_greeting.restype = _UniffiRustBuffer
+_UniffiLib.uniffi_sruft_fn_func_rust_tokio_test.argtypes = (
+    ctypes.POINTER(_UniffiRustCallStatus),
+)
+_UniffiLib.uniffi_sruft_fn_func_rust_tokio_test.restype = _UniffiRustBuffer
 _UniffiLib.ffi_sruft_rustbuffer_alloc.argtypes = (
     ctypes.c_int32,
     ctypes.POINTER(_UniffiRustCallStatus),
@@ -770,6 +776,9 @@ _UniffiLib.uniffi_sruft_checksum_func_rust_add.restype = ctypes.c_uint16
 _UniffiLib.uniffi_sruft_checksum_func_rust_greeting.argtypes = (
 )
 _UniffiLib.uniffi_sruft_checksum_func_rust_greeting.restype = ctypes.c_uint16
+_UniffiLib.uniffi_sruft_checksum_func_rust_tokio_test.argtypes = (
+)
+_UniffiLib.uniffi_sruft_checksum_func_rust_tokio_test.restype = ctypes.c_uint16
 _UniffiLib.ffi_sruft_uniffi_contract_version.argtypes = (
 )
 _UniffiLib.ffi_sruft_uniffi_contract_version.restype = ctypes.c_uint32
@@ -843,9 +852,14 @@ def rust_greeting(text: "str") -> "str":
         _UniffiConverterString.lower(text)))
 
 
+def rust_tokio_test() -> "str":
+    return _UniffiConverterString.lift(_rust_call(_UniffiLib.uniffi_sruft_fn_func_rust_tokio_test,))
+
+
 __all__ = [
     "InternalError",
     "rust_add",
     "rust_greeting",
+    "rust_tokio_test",
 ]
 

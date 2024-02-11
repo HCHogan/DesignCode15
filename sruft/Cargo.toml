@@ -14,6 +14,7 @@ crate-type = ["lib", "cdylib", "staticlib"]
 [dependencies]
 thiserror = "1"
 uniffi = { version = "0.26", features = ["build"] }
+tokio = { version = "1", features = ["full"] }
 
 [build-dependencies]
 uniffi_build = "0.26.0"

@@ -55,6 +55,9 @@ uint64_t uniffi_sruft_fn_func_rust_add(uint64_t left, uint64_t right, RustCallSt
 );
 RustBuffer uniffi_sruft_fn_func_rust_greeting(RustBuffer text, RustCallStatus *_Nonnull out_status
 );
+RustBuffer uniffi_sruft_fn_func_rust_tokio_test(RustCallStatus *_Nonnull out_status
+    
+);
 RustBuffer ffi_sruft_rustbuffer_alloc(int32_t size, RustCallStatus *_Nonnull out_status
 );
 RustBuffer ffi_sruft_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
@@ -171,6 +174,9 @@ uint16_t uniffi_sruft_checksum_func_rust_add(void
     
 );
 uint16_t uniffi_sruft_checksum_func_rust_greeting(void
+    
+);
+uint16_t uniffi_sruft_checksum_func_rust_tokio_test(void
     
 );
 uint32_t ffi_sruft_uniffi_contract_version(void
