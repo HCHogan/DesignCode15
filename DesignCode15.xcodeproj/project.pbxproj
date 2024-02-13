@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		362CF78C2B7B4B220024DBED /* Pie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362CF78B2B7B4B220024DBED /* Pie.swift */; };
+		362CF78E2B7B4F920024DBED /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362CF78D2B7B4F920024DBED /* Cardify.swift */; };
+		362CF7902B7B5F7C0024DBED /* MyNaviView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362CF78F2B7B5F7C0024DBED /* MyNaviView.swift */; };
 		3639A3AC2B774B4F000FC4CA /* TrivialViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3639A3AB2B774B4F000FC4CA /* TrivialViews.swift */; };
 		3639A3B52B77EB52000FC4CA /* sruft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3639A3B42B77EB52000FC4CA /* sruft.swift */; };
 		3639A3B92B77EE10000FC4CA /* libsruft.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3639A3B82B77EDDC000FC4CA /* libsruft.a */; };
@@ -25,6 +28,8 @@
 		36F634F22B0E4AD400E12F5D /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F634F12B0E4AD400E12F5D /* AccountView.swift */; };
 		36F9B2F22B74C25A005016B3 /* MemorizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F9B2F12B74C25A005016B3 /* MemorizeView.swift */; };
 		36F9B2F42B74C29F005016B3 /* PlayGround.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F9B2F32B74C29F005016B3 /* PlayGround.swift */; };
+		36FBF0BC2B78FDF7007FF51E /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FBF0BB2B78FDF7007FF51E /* AspectVGrid.swift */; };
+		36FBF0BE2B7918D0007FF51E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FBF0BD2B7918D0007FF51E /* CardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +50,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		362CF78B2B7B4B220024DBED /* Pie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pie.swift; sourceTree = "<group>"; };
+		362CF78D2B7B4F920024DBED /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
+		362CF78F2B7B5F7C0024DBED /* MyNaviView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNaviView.swift; sourceTree = "<group>"; };
 		3639A3AB2B774B4F000FC4CA /* TrivialViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrivialViews.swift; sourceTree = "<group>"; };
 		3639A3B42B77EB52000FC4CA /* sruft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = sruft.swift; path = sruft/bindings/sruft.swift; sourceTree = "<group>"; };
 		3639A3B62B77EB65000FC4CA /* sruftFFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sruftFFI.h; path = sruft/bindings/sruftFFI.h; sourceTree = "<group>"; };
@@ -66,6 +74,8 @@
 		36F634F12B0E4AD400E12F5D /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		36F9B2F12B74C25A005016B3 /* MemorizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeView.swift; sourceTree = "<group>"; };
 		36F9B2F32B74C29F005016B3 /* PlayGround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayGround.swift; sourceTree = "<group>"; };
+		36FBF0BB2B78FDF7007FF51E /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
+		36FBF0BD2B7918D0007FF51E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +112,11 @@
 				36F634F12B0E4AD400E12F5D /* AccountView.swift */,
 				36F634C32B0E1BC700E12F5D /* ContentView.swift */,
 				36F9B2F12B74C25A005016B3 /* MemorizeView.swift */,
+				36FBF0BB2B78FDF7007FF51E /* AspectVGrid.swift */,
+				36FBF0BD2B7918D0007FF51E /* CardView.swift */,
+				362CF78B2B7B4B220024DBED /* Pie.swift */,
+				362CF78D2B7B4F920024DBED /* Cardify.swift */,
+				362CF78F2B7B5F7C0024DBED /* MyNaviView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -351,12 +366,17 @@
 				3639A3AC2B774B4F000FC4CA /* TrivialViews.swift in Sources */,
 				36F9B2F42B74C29F005016B3 /* PlayGround.swift in Sources */,
 				36F9B2F22B74C25A005016B3 /* MemorizeView.swift in Sources */,
+				362CF7902B7B5F7C0024DBED /* MyNaviView.swift in Sources */,
 				36D981152B764B9F006C96C3 /* EmojiMemoryGame.swift in Sources */,
+				36FBF0BC2B78FDF7007FF51E /* AspectVGrid.swift in Sources */,
 				36F634C42B0E1BC700E12F5D /* ContentView.swift in Sources */,
 				36F634EC2B0E34AA00E12F5D /* Style.swift in Sources */,
 				3639A3B52B77EB52000FC4CA /* sruft.swift in Sources */,
+				362CF78E2B7B4F920024DBED /* Cardify.swift in Sources */,
 				36F634C22B0E1BC700E12F5D /* DesignCode15App.swift in Sources */,
 				36F634F22B0E4AD400E12F5D /* AccountView.swift in Sources */,
+				362CF78C2B7B4B220024DBED /* Pie.swift in Sources */,
+				36FBF0BE2B7918D0007FF51E /* CardView.swift in Sources */,
 				36D981132B7649F8006C96C3 /* MemoryGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,7 +550,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -567,7 +587,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

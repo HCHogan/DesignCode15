@@ -101,5 +101,5 @@ struct AccountView2: View {
 }
 
 #Preview {
-    FFIView()
+    AppStoreView()
 }

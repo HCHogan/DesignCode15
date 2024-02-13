@@ -10,13 +10,14 @@ struct MemorizeView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     // ObservedObject means if the object says something changed, redraw the view.
     // The lifetime of this object is tied to the lifetime of the view
-
+    private let aspectRatio: CGFloat = 2/3
+    private let spacing: CGFloat = 4
+    
     var body: some View {
         VStack {
-            ScrollView {
-                cards
-                    .animation(.default, value: viewModel.cards)
-            }
+            cards
+                .foregroundColor(viewModel.color)
+                .animation(.default, value: viewModel.cards)
             Spacer()
             Button("Shuffle") {
                 viewModel.shuffle()
@@ -24,8 +25,9 @@ struct MemorizeView: View {
             // cardCountAdjusters
         }
         .padding()
+        // .background(.yellow)
     }
-
+    
     // var cardCountAdjusters: some View {
     //     HStack {
     //         cardAdder
@@ -33,25 +35,21 @@ struct MemorizeView: View {
     //         cardRemover
     //     }
     // }
-
-    var cards: some View {
+    
+    // Can be put infront of any computed var or function
+    @ViewBuilder
+    private var cards: some View {
         // implicit return
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) {
-            // ForEach creates a bag of Legos
-            // we need an id for each element to identify which one is which, need to be unique(hashable)
-            // we used id: \.self here, this means the id is the element itself
-            ForEach(viewModel.cards) { c in
-                CardView(c)
-                    .aspectRatio(2/3, contentMode: .fit)
-                    .padding(4)
-                    .onTapGesture {
-                        viewModel.choose(c)
-                    }
-            }
+        AspectVGrid(viewModel.cards, aspectRatio: aspectRatio ) { c in
+            CardView(c)
+                .padding(spacing)
+                .onTapGesture {
+                    viewModel.choose(c)
+                }
         }
-        .foregroundColor(.orange)
+        // .background(.red)
     }
-
+    
     // var cardRemover: some View {
     //     cardCountAdjuster(by: -1, symbol: "minus")
     // }
@@ -68,39 +66,6 @@ struct MemorizeView: View {
     //     }
     //     .disabled(cardCount + offset < 1 || cardCount + offset > emojis.count)
     // }
-}
-
-struct CardView: View {
-    let card: MemoryGame<String>.Card
-    // Turn the var into a pointer, so the view itself is still immutable
-    // Temporary state for small things
-    // Never use it for the game logic
-
-    init(_ card: MemoryGame<String>.Card) {
-        self.card = card
-    }
-
-    var body: some View {
-        ZStack {
-            let base = RoundedRectangle(cornerRadius: 12)
-            // We use opacity instead of if else in @ViewBuilder here
-            Group {
-                base.fill(.white)
-                base.strokeBorder(lineWidth: 2)
-                Text(card.content)
-                    .font(.system(size: 200))
-                    .minimumScaleFactor(0.01) // if this font is too big, you can scale it down.
-                    .aspectRatio(1, contentMode: .fit)
-            }
-            .opacity(card.isFaceUp ? 1 : 0)
-            base.fill().opacity(card.isFaceUp ? 0 : 1)
-        }
-        .opacity(!card.isMatched ? 1 : 0)
-        // .onTapGesture {
-        //     print("tapped!")
-        //     card.isFaceUp.toggle()
-        // }
-    }
 }
 
 struct MemorizeViewPreviews: PreviewProvider {
